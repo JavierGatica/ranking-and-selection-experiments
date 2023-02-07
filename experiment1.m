@@ -22,10 +22,10 @@
 % simulation: encapsulated function for simulation output
 
 %% General Parameters
-k = 1000;
+k = 10000;
 means = arrayfun(@sqrt, 1:k);
-variance = 1;
-Nmax = 100000;
+variance = 10;
+Nmax = 1000000;
 M = 20;
 
 % STTB variables
@@ -62,7 +62,7 @@ end
 
 % Cardinality Plot
 figure
-t = tiledlayout(3,1);
+t = tiledlayout(1,2);
 
 
 
@@ -90,62 +90,61 @@ lgd = legend('Location', 'NorthOutside', 'Orientation', 'Horizontal');
 lgd.Layout.Tile = 'North';
 
 xlabel(t, 'Budget Used ($N$)', 'interpreter', 'latex')
-ylabel(t, 'Procedure Performance Measures', 'interpreter', 'latex')
+%ylabel(t, 'Procedure Performance Measures', 'interpreter', 'latex')
 
 stairs(card_sttb(1,:), card_sttb(2,:))
 stairs(card_bipass(1,:), card_bipass(2,:))
 plot(n0*k, k, 'r*');
 % lgd = legend('STTB', 'BiPASS', 'End of BiPASS Sampling');
 % lgd.Interpreter = 'latex';
-legend(p1, 'STTB', 'BiPASS', 'End of BiPASS Sampling');
+legend(p1, 'STTB', 'BiPASS', 'End of BiPASS Initial Stage');
 
 ylabel('$|S|$', 'interpreter', 'latex')
-xlabel('Budget Used', 'interpreter', 'latex')
 hold off
 
 % Optimality Gap Plot
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % OPTIMALITY GAP PLOT STTB
-
-opt_gap_sttb = [(0:max_budget) * k ; zeros(1,max_budget+1)]; % optimality gaps
-systems_in_set = zeros(1,M);
-opt_gap_sttb(2,1:2) = ones(1,2) * means(1);
-for n = 2:max_budget
-    for m = 1:M
-        systems_in_set(m) = means(find(subsetSTTB(n-1,:,m),1,'first'));
-    end
-    opt_gap_sttb(2,n+1) = mean(systems_in_set);
-end
-opt_gap_sttb(2,:) = means(end) - opt_gap_sttb(2,:); % average optimality gap for any given budget
+% 
+% opt_gap_sttb = [(0:max_budget) * k ; zeros(1,max_budget+1)]; % optimality gaps
+% systems_in_set = zeros(1,M);
+% opt_gap_sttb(2,1:2) = ones(1,2) * means(1);
+% for n = 2:max_budget
+%     for m = 1:M
+%         systems_in_set(m) = means(find(subsetSTTB(n-1,:,m),1,'first'));
+%     end
+%     opt_gap_sttb(2,n+1) = mean(systems_in_set);
+% end
+% opt_gap_sttb(2,:) = means(end) - opt_gap_sttb(2,:); % average optimality gap for any given budget
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % OPTIMALITY GAP PLOT BIPASS
 
 % dado un budget transitions(n), quiero retornar los M indices
 % con el sistema con media mas pequeña que todavía esté en el conjunto
-
-opt_gap_bipass = [transitions ; zeros(1,n_transitions)];
-opt_gap_bipass(2,1) = means(1);
-for n = 2:n_transitions
-    for m = 1:M
-        nonzero_value = find(subsetBiPASS(m,:),1,'last');
-        systems_in_set(m) = means(find(subsetBiPASS(m,1:nonzero_value) <= transitions(n), 1, 'last'));
-    end
-    opt_gap_bipass(2,n) = mean(systems_in_set);
-end
-
-opt_gap_bipass(2,:) = means(end) - opt_gap_bipass(2,:);
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-% PLOTTING
-
-nexttile
-hold on
-stairs(opt_gap_sttb(1,:), opt_gap_sttb(2,:))
-stairs(opt_gap_bipass(1,:), opt_gap_bipass(2,:))
-plot(n0*k, means(end) - means(1), 'r*')
-ylabel('$\max_{i \in S} \{ \mu_k - \mu_i \}$', 'interpreter', 'latex')
-hold off
+% 
+% opt_gap_bipass = [transitions ; zeros(1,n_transitions)];
+% opt_gap_bipass(2,1) = means(1);
+% for n = 2:n_transitions
+%     for m = 1:M
+%         nonzero_value = find(subsetBiPASS(m,:),1,'last');
+%         systems_in_set(m) = means(find(subsetBiPASS(m,1:nonzero_value) <= transitions(n), 1, 'last'));
+%     end
+%     opt_gap_bipass(2,n) = mean(systems_in_set);
+% end
+% 
+% opt_gap_bipass(2,:) = means(end) - opt_gap_bipass(2,:);
+% 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%
+% % PLOTTING
+% 
+% nexttile
+% hold on
+% stairs(opt_gap_sttb(1,:), opt_gap_sttb(2,:))
+% stairs(opt_gap_bipass(1,:), opt_gap_bipass(2,:))
+% plot(n0*k, means(end) - means(1), 'r*')
+% ylabel('$\max_{i \in S} \{ \mu_k - \mu_i \}$', 'interpreter', 'latex')
+% hold off
 
 % Average Optimality Gap Plot
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -183,5 +182,5 @@ stairs(avg_opt_gap_bipass(1,:), avg_opt_gap_bipass(2,:))
 plot(n0*k, means(end) - mean(means), 'r*')
 % lgd = legend('STTB', 'BiPASS', 'End of BiPASS Sampling');
 % lgd.Interpreter = 'latex';
-ylabel('$\sum_{i \in S}( \mu_k - \mu_i )$', 'interpreter', 'latex')
+ylabel('$ \frac{1}{|S|} \sum_{i \in S}( \mu_k - \mu_i )$', 'interpreter', 'latex')
 hold off

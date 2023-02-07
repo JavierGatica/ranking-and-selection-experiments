@@ -11,7 +11,7 @@ k_values = kmin:step:kmax;
 n_iterations = size(k_values,2);
 variance = 1;
 n0 = 40;
-M = 30;
+M = 1;
 
 % STTB parameters
 alpha = 0.05;
@@ -27,8 +27,7 @@ fraction_bipass = zeros(M, n_iterations);
 i = 1;
 for k = kmin:step:kmax
     N = n0 * k;
-
-    means = [sort(betarnd(a,b,[1, k-1])), 1] * 5;
+    means = betacdf(linspace(0,1,k),a,b);
     % for STTB
     outputSTTB = sim_output(means,variance,n0,M);
     for m = 1:M
@@ -40,7 +39,7 @@ for k = kmin:step:kmax
     % for BiPASS
     simulation = @(dn, active) sim_output(means(active), variance, dn, 1);
     for m = 1:M
-        bipass = BiPASS(simulation, c, n_init, dn, n0*k, k);
+        bipass = BiPASS(simulation, c, n_init, dn, N, k);
         bipass = bipass == 0;
         fraction_bipass(m,i) = (sum(bipass)-1) / (k-1);
     end

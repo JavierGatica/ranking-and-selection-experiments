@@ -5,14 +5,14 @@ b = 2;
 % experiment parameters
 M = 100;
 k = 1000;
-variance = 0.1;
+variance = 0.5;
 n0_range = [20, 40, 100];
 n_budgets = size(n0_range,2);
 alpha = 0.05;
 
 
 % KNN parameters
-h = 0.005;
+h = 0.01;
 disc = 0:h:1; % discretization
 n_disc = size(disc,2);
 knn_curveSTTB = zeros(1,n_disc);
@@ -40,8 +40,8 @@ for n0 = n0_range
     % BiPASS variables dependent on n0
     Nmax = n0*k;
     for m = 1:M
-        means = betarnd(a,b,[1,k]); % the values must be between 0 and 1
-        
+        %means = betarnd(a,b,[1,k]); % the values must be between 0 and 1
+        means = betacdf(linspace(0,1,k),a,b);
         % for STTB
         outputSTTB = sim_output(means,variance,n0,1);
         mu = mean(outputSTTB);
