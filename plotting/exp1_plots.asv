@@ -1,0 +1,60 @@
+cd ..
+load("data/exp1_data.mat")
+
+Nmin = 10^4;
+
+% Plot 1
+
+close all
+
+semilogx(x_sttbm, mean(card_sttbm),"col","#0072BD")
+
+hold on
+
+semilogx(x_bipass, mean(card_bipass),"col","#D95319")
+
+semilogx(x_sttbm, quantile(card_sttbm,0.1),"--","col","#0072BD")
+
+semilogx(x_bipass, quantile(card_bipass,0.1),"--","col","#D95319")
+
+
+semilogx(x_sttbm, quantile(card_sttbm,0.9),"--","col","#0072BD")
+semilogx(x_bipass, quantile(card_bipass,0.9),"--","col","#D95319")
+
+
+
+
+xlim([Nmin Nmax])
+xlabel('Total Sample Size ($N$)', 'interpreter', 'latex')
+legend('STTB', 'Bi-PASS mean');
+legend boxoff
+ylabel('Subset Size $(|S|)$', 'interpreter', 'latex')
+hold off
+
+savefig("figures/exp1_1")
+
+% Plot 2
+
+close all
+
+semilogx(x_sttbm, mean(avg_opt_gap_sttbm),"col","#0072BD")
+
+hold on
+
+semilogx(x_bipass, mean(avg_opt_gap_bipass),"col","#D95319")
+
+semilogx(x_sttbm, quantile(avg_opt_gap_sttbm,0.1),"--","col","#0072BD")
+
+semilogx(x_bipass, quantile(avg_opt_gap_bipass,0.1),"--","col","#D95319")
+
+
+semilogx(x_sttbm, quantile(avg_opt_gap_sttbm,0.9),"--","col","#0072BD")
+semilogx(x_bipass, quantile(avg_opt_gap_bipass,0.9),"--","col","#D95319")
+
+xlim([0 Nmax])
+legend('STTB','Bi-PASS');
+legend boxoff
+xlabel('Total Sample Size ($N$)', 'interpreter', 'latex')
+ylabel('Average Optimality Gap $(\frac{1}{|S|} \sum_{i \in S} (\mu_k - \mu_i))$', 'interpreter', 'latex')
+hold off
+savefig("figures/exp1_2")
