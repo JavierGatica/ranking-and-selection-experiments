@@ -28,7 +28,7 @@ plot(x_bipass, quantile(card_bipass,0.9),"--","col","#D95319")
 
 
 
-
+box off
 xlim([Nmin Nmax])
 xlabel('Total Sample Size ($N$)', 'interpreter', 'latex')
 legend('STTB', 'Bi-PASS','interpreter','latex');

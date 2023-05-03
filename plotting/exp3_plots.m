@@ -28,7 +28,7 @@ for i = 1:n_budgets
 end
 
 xlim([0.5 1]);
-ylabel('Probability of Selection ($P( i \in S | \mu_i = \mu )$)', 'interpreter', 'latex')
+ylabel('POS ($P( i \in S | \mu_i = \mu )$)', 'interpreter', 'latex')
 xlabel('System Performance ($\mu$)','interpreter','latex')
 
 lgd = legend('$N=2\cdot 10^5$', '$N=4 \cdot 10^5$', '$N=10^6$','Location', 'NorthOutside', 'Orientation', 'Horizontal','interpreter','latex');
@@ -36,7 +36,7 @@ legend boxoff
 
 plt = gca;
 
-set(gcf,'position',[0,0,350,300])
+set(gcf,'position',[0,0,280,200])
 set(plt, 'FontSize', 14)
 
 

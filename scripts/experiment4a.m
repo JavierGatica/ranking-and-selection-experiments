@@ -1,12 +1,4 @@
-%% TODO:
 
-% separate calculations from plotting
-% 
-% make functions for more concise code
-% 
-% adapt section 2 code to reach the linear growth portion
-%
-% adapt the code to work for the new folder structure
 
 add_rm_paths('add')
 
@@ -33,6 +25,7 @@ var_max = 0.7;
 n_sigma = 20;
 variances = linspace(var_min,var_max,n_sigma);
 
+subset_size = ones(M,n_max-n_min+1,n_sigma);
 budget_used = zeros(M,n_max-n_min+1,n_sigma);
 for n_var = 1:n_sigma
     variance = variances(n_var);
@@ -43,6 +36,7 @@ for n_var = 1:n_sigma
             subset = screening(sample_means,sample_var,i+n_min-1,alpha_screening,0);
             k2 = sum(subset);
             if k2 >= 2
+                subset_size(m,i,n_var) = k2;
                 [h,~] = Rinott_Number(sum(subset),n0_selection,1-alpha_selection,0.99,1000);
                 budget_used(m,i,n_var) = selection(subset, h, n0_selection, delta,variance) + (n_min + i - 1) * k;
             else
@@ -52,27 +46,13 @@ for n_var = 1:n_sigma
     end
 end
 
-
-
-[N, S] = meshgrid(n_min:n_max, variances);
-
-SampleSize = reshape(mean(budget_used,1),n_diff,n_sigma)';
-
-s = pcolor(N,S,SampleSize);
-s.FaceColor = 'interp';
-s.LineStyle = 'none';
-
-set(gca,"XScale","log")
-
-xlabel('Screening sample size ($n_0$)', 'interpreter', 'latex')
-ylabel('System variance ($\sigma^2$)', 'interpreter', 'latex')
-c = colorbar;
-c.Label.String = 'Total Sample Size';
-c.Label.Interpreter = 'latex';
-
-
-
 add_rm_paths('remove')
+
+cd ..
+save("data/exp4a_data.mat")
+
+
+
 
 function sample_means = means_simulation(systems, n0, means, variance)
 
