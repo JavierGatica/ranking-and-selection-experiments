@@ -35,7 +35,6 @@ for n0 = n0_range
     % BiPASS variables dependent on n0
     Nmax = n0*k;
     for m = 1:M
-        %means = betarnd(a,b,[1,k]); % the values must be between 0 and 1
         % for STTB
         output1 = sim_output(means,variance,n0,1);
         mu = mean(output1);
@@ -48,8 +47,6 @@ for n0 = n0_range
         resultsBiPASS(:,(k*(m-1)+1):k*m) = [means ; BiPASS(simulation,c, n_init, dn, Nmax, k) == 0];
     end
     
-    % THIS IS THE KNN REGRESSION
-    
     curvesSTTBm(j,:) = emp_cdf(means,resultsSTTBm);
     curvesBiPASS(j,:) = emp_cdf(means, resultsBiPASS);
     j = j+1;
@@ -59,6 +56,3 @@ add_rm_paths('remove')
 
 cd ..
 save("data/exp3_data.mat")
-
-% given that there is no empirical dependence of k for the screening ratio,
-% it can be considered a fixed variable of the problem. (k = 1000)

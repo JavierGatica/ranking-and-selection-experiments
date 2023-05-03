@@ -1,3 +1,7 @@
+%% TODO
+
+% put more labels in the YAxis
+
 cd ..
 load("data/exp1_data.mat")
 
@@ -34,7 +38,7 @@ ylabel('Subset Size $(|S|)$', 'interpreter', 'latex')
 
 plt = gca;
 set(gcf,'position',[0,0,280,200])
-set(plt,"XScale","log")
+set(plt,"YScale","log")
 set(plt, 'FontSize', 14)
 hold off
 
@@ -68,7 +72,7 @@ ylabel('AOG $(\frac{1}{|S|} \sum_{i \in S} (\mu_k - \mu_i))$', 'interpreter', 'l
 plt = gca;
 
 set(gcf,'position',[0,0,280,200])
-set(plt,"XScale","log")
+set(plt,"YScale","log")
 set(plt, 'FontSize', 14)
 
 hold off

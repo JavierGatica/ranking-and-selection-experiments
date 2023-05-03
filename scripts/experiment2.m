@@ -7,7 +7,6 @@ a = 4;
 b = 2;
 
 % experiment parameters
-% k_values = [200 300 500 1000 1500 2000 3000];
 k_values = linspace(200,2000,10);
 n_iterations = size(k_values,2);
 variance = 0.5;
