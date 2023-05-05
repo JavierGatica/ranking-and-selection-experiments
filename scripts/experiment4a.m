@@ -1,5 +1,3 @@
-
-
 add_rm_paths('add')
 
 k = 50;
@@ -71,11 +69,11 @@ end
 
 
 function subset = screening(sample_means,S2,n0,alpha,delta)
-    % the screening procedure used is DSTTB with marginal PGS
+    % the screening procedure used is STTB with marginal PGS
     
     k = size(sample_means,2);
-    t_value = tinv((1-alpha)^(1/k),n0-1);
-    W = 2 * t_value * sqrt(S2 / n0) + delta;
+    t_value = tinv((1-alpha)^(1/(k-1)),n0-1);
+    W = t_value * sqrt(2 * S2 / n0) + delta;
     subset = false(1,k);
     for i = 1:k
         subset(i) = ~any(sample_means(i) < sample_means - W);
