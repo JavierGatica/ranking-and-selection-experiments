@@ -3,15 +3,15 @@ add_rm_paths('add')
 clear
 close all
 % beta parameters
-a = 4;
-b = 2;
+a = 1;
+b = 1;
 
 % experiment parameters
 k_values = linspace(200,2000,10);
 n_iterations = size(k_values,2);
 variance = 0.5;
 n0 = 40;
-M = 40;
+M = 20;
 
 % STTB parameters
 alpha = 0.05;
@@ -49,4 +49,4 @@ end
 add_rm_paths('remove')
 
 cd ..
-save("data/exp2_data.mat")
+save("data/exp2c_data.mat")

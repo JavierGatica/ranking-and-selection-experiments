@@ -1,25 +1,24 @@
 add_rm_paths('add')
 
-k = 50;
+k = 100;
 means = 1:k;
-
 
 
 M = 100;
 
 n_min = 5;
-n_max = 600;
+n_max = 15;
 n_diff = n_max-n_min+1;
 
 alpha = 0.05;
 alpha_screening = 1 - sqrt(1 - alpha);
 alpha_selection = 1 - sqrt(1 - alpha);
 
-delta = 0.05;
+delta = 5.5;
 n0_selection = 20;
 
-var_min = 0.5;
-var_max = 0.7;
+var_min = 30;
+var_max = 35;
 n_sigma = 20;
 variances = linspace(var_min,var_max,n_sigma);
 
@@ -42,6 +41,7 @@ for n_var = 1:n_sigma
             end
         end
     end
+    n_var
 end
 
 add_rm_paths('remove')

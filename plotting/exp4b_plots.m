@@ -19,7 +19,7 @@ plot((1 - sqrt(1-alpha))*ones(1,2), [min(delta_screening), max(delta_screening)]
 
 [~,I] = min(SampleSize,[], "all");
 [r,c] = ind2sub(size(SampleSize), I);
-scatter(alpha_screening(r),delta_screening(c),"x")
+scatter(A(r,c), G(r,c),"gx","LineWidth",5)
 
 
 xlabel('Screening Significance Level ($\alpha_1$)','interpreter','latex')
@@ -29,7 +29,7 @@ c.Label.String = 'Total Sample Size ($N$)';
 c.Label.Interpreter = 'latex';
 
 plt = gca;
-set(gcf,'position',[0,0,350,280])
+set(gcf,'position',[0,0,290,230])
 set(plt, 'FontSize', 14)
 
 ylim([min(delta_screening), max(delta_screening)])

@@ -9,8 +9,8 @@
 
 add_rm_paths('add')
 
-k = 1000;
-means = 1:k; % 
+k = 100;
+means = 1:k;
 
 
 n_selection = 20;
@@ -20,10 +20,10 @@ Y = chi2rnd(n_selection-1,rep,k-1);
 C = chi2rnd(n_selection-1,rep,1);
 
 
-variance = 1;
+variance = 30;
 
 M = 200;
-n_screening = 30;
+n_screening = 15;
 alpha = 0.05;
 
 
@@ -32,12 +32,12 @@ alpha_screening = linspace(0.005,0.03,n_alpha);
 alpha_selection = 1 - (1 - alpha) * (1 - alpha_screening) .^ -1;
 
 n_delta = 100;
-delta = 0.1;
+delta = 5.5;
 delta_screening = linspace(0,delta/2,n_delta);
 delta_selection = delta - delta_screening;
 
 h = zeros(k,n_alpha);
-for i = 2:200
+for i = 2:40
     for j = 1:n_alpha
         h(i,j) = CRN_rinott_number(Z,Y,C,i,1 - alpha_selection(j),n_selection);
     end
@@ -52,6 +52,7 @@ parfor m = 1:M
         for i = 1:n_alpha
             subset = screening(sample_means,sample_var,n_screening,alpha_screening(i),delta_screening(j));
             k2 = sum(subset);
+            k2
             if k2 >= 2
                 budget_used(m,i,j) = selection(subset, h(k2,i), n_selection, delta_selection(j),variance);
             end
