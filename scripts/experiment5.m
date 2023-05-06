@@ -28,13 +28,12 @@ proc_times = zeros(1,nproc(p));
 subset_sizes = zeros(6, length(nproc));
 
 rng(1);
-total_sample = sim_output(means,variance,n0,1);
 
 %% | STTB:
 
 "| STTB"
 for m = 1:M
-    %total_sample = sim_output(means,variance,n0,1);
+    total_sample = sim_output(means,variance,n0,1);
     [t2(m),subset] = timeSTTB(total_sample, alpha,delta);
     m
 end
@@ -47,7 +46,7 @@ t_mS = t2;
 
 "| DSTTB + STTB"
 for m = 1:M
-    %total_sample = sim_output(means,variance,n0,1);
+    total_sample = sim_output(means,variance,n0,1);
     [t2(m), subset] = timeDSTTB(total_sample, alpha, delta);
     [temp, subset2] = timeSTTB(total_sample(:,subset),alpha,delta);
     t2(m) = t2(m) + temp;
@@ -68,7 +67,7 @@ for p = 1:length(nproc)
     
     "STTB | STTB"
     for m = 1:M
-        %total_sample = sim_output(means,variance,n0,1);
+        total_sample = sim_output(means,variance,n0,1);
         for i = 1:nproc(p)
     	    indices = partition(i):(partition(i+1)-1);
             [proc_times(i), proc_subset] = timeSTTB(total_sample(:,indices),alpha,delta);
@@ -88,7 +87,7 @@ for p = 1:length(nproc)
     
     "DSTTB | STTB"
     for m = 1:M
-        %total_sample = sim_output(means,variance,n0,1);
+        total_sample = sim_output(means,variance,n0,1);
         for i = 1:nproc(p)
     	    indices = partition(i):(partition(i+1)-1);
             [proc_times(i), proc_subset] = timeDSTTB(total_sample(:,indices),alpha,delta);
@@ -109,7 +108,7 @@ for p = 1:length(nproc)
     
     "DSTTB | DSTTB + STTB"
     for m = 1:M
-        %total_sample = sim_output(means,variance,n0,1);
+        total_sample = sim_output(means,variance,n0,1);
         for i = 1:nproc(p)
     	    indices = partition(i):(partition(i+1)-1);
             [proc_times(i), proc_subset] = timeDSTTB(total_sample(:,indices),alpha,delta);
@@ -134,7 +133,7 @@ for p = 1:length(nproc)
     
     "DSTTB + STTB | DSTTB + STTB"
     for m = 1:M
-        %total_sample = sim_output(means,variance,n0,1);
+        total_sample = sim_output(means,variance,n0,1);
         for i = 1:nproc(p)
     	    indices = partition(i):(partition(i+1)-1);
             [proc_times(i), proc_subset] = timeDSTTB(total_sample(:,indices),alpha,delta);
